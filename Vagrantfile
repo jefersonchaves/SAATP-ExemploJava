@@ -2,11 +2,14 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  
+
   config.vm.box = "pussinboots/ubuntu-truly-jdk8"
-  config.vm.synced_folder ".", "/vagrant", type: "nfs", :mount_options => ["dmode=755","fmode=755"]
-  config.vm.provision :shell, :path => "provision/provision.sh", :args => [ENV['projectDependencies']||'']
-   
+  #config.vm.synced_folder ".", "/vagrant", type: "nfs", :mount_options => ["dmode=755","fmode=755"]
+  config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=755","fmode=755"]
+  #config.vm.provision :shell, :path => "provision/provision.sh", :args => [ENV['projectDependencies']||'']
+  config.vm.provision :shell, :path => "provision/provision_many.sh", :args => ["git-core"], run: "always"
+  config.vm.provision :shell, :path => "provision/compile.sh", run: "always"
+
   config.vm.provider :virtualbox do |vb|
 	vb.gui = true
 	vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
