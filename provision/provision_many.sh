@@ -10,7 +10,7 @@ do
   sh /vagrant/provision/packages/$package.sh
 done
 
-FILE="/vagrant/provision/softwares_custom.txt"
+FILE="/vagrant/environmentConfig/softwares_custom.txt"
 DEPS2=()
 k=0
 #expecting 1 software per line

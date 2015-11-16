@@ -4,9 +4,7 @@
 Vagrant.configure("2") do |config|
 
   config.vm.box = "pussinboots/ubuntu-truly-jdk8"
-  #config.vm.synced_folder ".", "/vagrant", type: "nfs", :mount_options => ["dmode=755","fmode=755"]
   config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=755","fmode=755"]
-  #config.vm.provision :shell, :path => "provision/provision.sh", :args => [ENV['projectDependencies']||'']
   config.vm.provision :shell, :path => "provision/provision_many.sh", :args => ["git-core"], run: "always"
   config.vm.provision :shell, :path => "provision/compile.sh", run: "always"
 
@@ -20,7 +18,7 @@ Vagrant.configure("2") do |config|
 	vb.customize ["modifyvm", :id, "--ioapic", "on"]
 	vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
 	vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-	vb.memory = 3072
+	vb.memory = 512
 	vb.cpus = 2
   end
 end
